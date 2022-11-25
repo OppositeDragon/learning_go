@@ -109,3 +109,79 @@ p3 := Person(name: "Joe",
 	address: "123 Main St",
 	phone: "555-555") //initializing witha a struct literal
 ```
+# Module 4 - Protocols and formats
+### RFCs
+Requests for comments(RFC)
+| Examples |                                  |
+| -------- | -------------------------------- |
+| HTML     | Hypertext Markup Language 1866   |
+| URI      | Uniform resource identifier 3986 |
+| HTTP     | Hypertext Transfer Protocol 2616 |
+
+Protocol packages
+- Go provides packages for the most important protocols.
+  - net/http > Web communication protocol `http.Get(www.google.com)`
+  - net > TCP/IP communication protocol `net.Dial("tcp", "uci.edu:80")`
+- Function that encode and decode protocol format.
+  - JSON > RFC 7159 (attribute-value pairs) `{"name":"Mary","age":"19"}`
+### JSON
+Properties
+- All UNICODE
+- Human readable
+- Fairly compact representation
+- Types can be combined recursively
+  - Array of structs
+  - Strinct of structs
+
+Json Marshalling > Generating a JSON representation from an object.
+`Marshal()` returns JSON rerpsentation as `[]byte`
+`Unmarshal()` returns an object from a JSON  `[]byte` representation.
+```go
+p1:= Person(name: "Joe", address: "123 Main St", phone: "555-555")
+var p2  Person
+	
+barr,err:=json.Marshal(p1)
+
+err:= json.Unmarshal(barr, &p2)
+```
+
+
+
+
+### ioutil -File access
+- Linear access, NOT random access
+  - Mechanical delay
+- Basic operations
+  1. Open - get handle for access
+  2. Read - read bytes into []byte
+  3. Write - write []byte into file
+  4. Close - release handle
+  5. Seek - move read/write head
+
+Packages
+- "io/ioutil" > basic functions
+  ```go
+  dat,e:= ioutil.ReadFile("file.txt")
+  //dat is []byte with the contents of the entire file
+  //opening and closing is not needed
+  //large file may cause problems
+  dat2 = "Hello World"
+  ioutil.WriteFile("file.txt", dat2, 0777)
+  //Arguments are: the name of file, the []byte to write, and the permissions
+  ```
+- "os" > Offers more control
+  ```go
+  os.Open() //opens a file
+  //returns a file descriptor
+
+  os.Close() //closes a file
+
+  os.Read() //reads from a file into a []byte
+  //the amount of bytes read, can be controlled by how big is the []byte passed as argument
+  os.Write() //writes []byte into a file
+  ```
+  ![](img/osfile.png)
+  ![](img/oscreate.png)
+
+
+
