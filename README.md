@@ -325,5 +325,33 @@ func main (){
 ```
 
 ## Module 3 - Object orientation en GO
+### Clases and encapsulation
+- Classes are a collection of fields and functions that share a well defined resposability. Classes are a template, cotain data field, not actual data.
+- Objects are instances of a class and contain actual data.
+- Encapsulation makes so that the data can only be accesed by using method, in turn this makes it easy to guarantee data consistency.
+
+Support for classes in GO
+ - There is no "class" keyword in GO.
+ - Method can have a receiver type,to indicate that they are associated with a Type.
+ - Dot notation can be used to call methods related with a type. 
+ 	- ```go
+		type MyInt int
+		func (mi MyInt) double() int{
+			return int (mi*2)
+		}
+		func main(){
+			v:=MyInt(2)
+			fmt.Println(v.double())
+		}
+		```
+ - Method associated with a type have an implicit first argument.
+ - Pointer receivers (to modify the object implicitly passed tho the function)
+   - ```go
+		func (p *Point) Offset(v float64){
+			px = px + v
+		}
+		```
+### Point recivers, referencing, dereferencing.
+No need to reference or dereference when using pointer receivers.
 
 ## Module 4 - Interfaces for abstraction
