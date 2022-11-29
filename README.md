@@ -1,9 +1,9 @@
-# Learning_GO
-Getting Started with Go
+# 1. Getting Started with Go
 
-# Module 1 Quiz
+
+## Module 1 Quiz
 ![Quiz 1](img/quiz1.png)
-# Module 3 - Composite data types
+## Module 3 - Composite data types
 ### Arrays
 Fixed-lenght series of elements of a chosen type. The elements on a array ari initializod by default to the default value of that type.
 ```go
@@ -109,7 +109,7 @@ p3 := Person(name: "Joe",
 	address: "123 Main St",
 	phone: "555-555") //initializing witha a struct literal
 ```
-# Module 4 - Protocols and formats
+## Module 4 - Protocols and formats
 ### RFCs
 Requests for comments(RFC)
 | Examples |                                  |
@@ -185,3 +185,84 @@ Packages
 
 
 
+
+# 2. Functions, Methods, and Interfaces in Go
+
+## Module 1 - Functions and Organization
+Functions are set of instructions with a name. These provides a way to reuse code. Functions can hide details of implementation, and can be used to create abstractions. Funtions also help to improve understandability, specially when nome appropriately.
+
+```go
+func main(){
+	findPupil()
+}
+func findPupil(){
+	grabImage()
+	filterImage()
+	findEllipses()
+}
+```
+### Parameters and return values
+Parameters are the input data needed to perform an operation. These are listen in parenthesis after the function name.
+```go
+//declaration
+func multiply(x int, y int /**parameters*/){
+	fmt.Println(x * y)
+}
+//call
+multiply(2,3 /**argumments*/)
+```
+Functions can return a value as a result of the operation. The return type is specified after the parenthesis of the function declaration.
+```go
+func multiply(x int, y int) int /**return type is int*/{
+	return x * y
+}
+a := multiply(2,3)
+```
+Functions in GO can have multiple return values.
+```go
+func increase(x int) (int, int) /**return type is int*/{
+	return x , x + 1
+}
+a,b := increase(2)
+```
+
+### Calling function by value or by reference
+By Value
+- Passed arguments are copied parameters
+- Modifying parameters has no effect outside the function.
+- Advantages
+  - data encapsulation
+- Disadvatages
+  - To copy large data structures can be expensive
+By Reference
+- Passing a pointer as argunment
+- The function has direct acces to the variable in memory
+- Advatages
+  - Faster, as it is not needed to create copies of variables
+- Disadvantages
+  - No data encapsulation
+```go
+//by value
+func foo (y int){//takes an integer as argument
+	y = y + 1
+}
+func main(){
+	x := 1
+	foo(x)
+	fmt.Println(x)
+}
+//by reference
+func foo (y *int){//takes a pointer of integer as argument
+	*y = *y + 1
+}
+func main(){
+	x := 1
+	foo(&x)
+	fmt.Println(x)
+}
+```
+## Module 2 - Function types
+
+## Module 3 - Object orientation en GO
+
+## Module 4 - Interfaces for abstraction
