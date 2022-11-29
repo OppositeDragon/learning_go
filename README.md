@@ -262,6 +262,67 @@ func main(){
 }
 ```
 ## Module 2 - Function types
+### First-Call values
+Functions on GO are first-class. 
+- Functions can be treated as any other type.
+- Variables con be of type function.
+- Can be created dynamically
+- Can be stored in a data structure
+```go
+//declare variable of type function
+var f func(int) int
+//some other function
+func addOne(x int) int{
+	return x + 1
+}
+func main(){
+	f = addOne //no parenthesis
+	fmt.Println(f(1))
+}
+```
+- Functions can be passed as arguments
+```go
+func applyFunction(f func (int) int, x int) int{
+	return f(x)
+}
+func main(){
+	fmt.Println(applyFunction(addOne, 1))
+}
+```	
+- Anonymous functions
+```go
+v := applyIt(func (x int) int {return x+1}, 2)
+```
+### Returning functions
+Functions can return functions.
+When functions are passe/returned, their environment comes with them.
+### Variadic and Deferred
+Variable number of arguments, the arguments are treated as slice inside the function.
+```go
+func getMax(values ...int)int{
+	max:=0
+	for _,v := range values{
+		if v > max{
+			max = v
+		}
+	}
+	return max
+}
+getMax(1,2,3,4,5,6,7,8,9,10)
+
+//a slice can be passed, but ...needs fo follow the name of the slice.
+slice:=[]int{1,2,3}
+getMax(slice...)
+```
+Function calls can be deferred until the sorrounding function completes. usally used for clean up activities.
+```go
+func main (){
+	i:=1
+	defer fmt.Println(i+1)
+	i++
+	fmt.Print(i)
+}
+```
 
 ## Module 3 - Object orientation en GO
 
