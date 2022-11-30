@@ -348,10 +348,49 @@ Support for classes in GO
  - Pointer receivers (to modify the object implicitly passed tho the function)
    - ```go
 		func (p *Point) Offset(v float64){
-			px = px + v
+				px = px + v
 		}
 		```
 ### Point recivers, referencing, dereferencing.
 No need to reference or dereference when using pointer receivers.
 
 ## Module 4 - Interfaces for abstraction
+### Polymorphism
+- Is the ability for an object to have diferent "forms" dependisc on the context
+- Identical at a hing level of abstraction, and different at a low level of abstraction.
+
+
+Interfaces
+- Set of method signatures
+  - Name paramenters, return values.
+  - Implementation is not defined.
+  - Expresses a conceptual similarity between types.
+
+Defining an iterface
+```go
+type Shape interface{
+	Area() float64
+	Perimeter() float64
+}
+type Triangle {...}
+func (t Triangle) Area() float64 {...}
+```
+### Type Assertions
+Disambiguate between types that implement the same interface.
+```go
+func Draw2DShape(s Shape2D){
+	switch shape:=s.(type){
+		case Rectangle:
+			drawRect(shape)
+		case Triangle:
+			drawTriangle(shape)
+	}
+}
+```
+### Error handling
+Many go programs return error interface
+```go
+type error interface{ Error() string }
+```
+If there is no error then "error==nil" otherwise, error would indicate the actual error.
+
