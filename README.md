@@ -394,3 +394,41 @@ type error interface{ Error() string }
 ```
 If there is no error then "error==nil" otherwise, error would indicate the actual error.
 
+# 3. Concurrency in GO
+
+## Module 1 - Why use concurrency?
+
+### Parallel execution
+> Parallel execution is not the same as concurrency
+
+- Happens when two programs execute in at exactly the same time. 1 core of the cpu runs 1 instruction at a time.
+- Tasks may complete more quickly.
+- Not all tasks are parallelizable.
+
+### Von Neumann Bottleneck
+![](img/speedup.png)
+> Moore's Law - Prodictod transistor densitiy would double every two years.
+(not an actual law, just an observation)
+
+### Power wall
+![](img/power.png)
+![](img/dynamicPower.png)
+
+### Concurrent execution
+- Happens when two programs execute in overlapping time periods, but these are not executing at the same time.
+![](img/pvsc.png)
+- Concurrent tasks may be executed on the same hardware.
+- In GO mapping from tasks to hardware is not directly controlled by the programmer.
+![](img/mapping.png)
+- Hiding Latency
+  - Concurrency gan improve performance even without parallelism.
+  - As tasks must periodically wait for I/O, memory access, etc..., other concurrent tasks can be processed while the other task is waiting.
+  - ![](img/hwMapping.png))
+
+## Module 2 - Concurrency basics
+
+## Module 3 - Threads in GO
+
+## Module 4 - Syncronized communication
+
+ 
