@@ -427,6 +427,38 @@ If there is no error then "error==nil" otherwise, error would indicate the actua
 
 ## Module 2 - Concurrency basics
 
+### Processes
+- A process is an instance of a program that is being executed.
+- A process may have
+  1. Memory
+     1. Virtual address space
+     2. Code, stack, heap, shared libraries, etc...
+  2. Registers
+     1. Program counter
+     2. Data Regs
+     3. Stack pointer
+
+Operating Systems
+- Allow many processes to execute concurrently.
+- Provide fair access to resorces
+- Scheduling
+  - Gives the illusion of parallel execution.
+- **Goroutines**
+  - Are like threads but in GO
+  - Many Goroutines execute within a single OS thread.
+   ![](img/goroutines.png)
+- **Interleavings**
+  - Order of execution within a task is known, but the order of execution **between** concurrent tasks is *not* known.
+  - Interleaving of instructions between tasks is unknown.
+    - Many interleavings are possible.
+    - Programmer must consider all possibilities.
+    - Ordering is non-deterministic.
+  - Race conditions
+    - Outcome depends on non-deterministic ordering.
+    - Races occur due to **communication**.
+  - Threads are not completele independent
+  
+  
 ## Module 3 - Threads in GO
 
 ## Module 4 - Syncronized communication
