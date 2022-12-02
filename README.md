@@ -457,10 +457,75 @@ Operating Systems
     - Outcome depends on non-deterministic ordering.
     - Races occur due to **communication**.
   - Threads are not completele independent
-  
-  
+
 ## Module 3 - Threads in GO
+- Creating goroutines
+  - One goroutine is created automatically to execute the `main()` function.
+  - Other goroutines con be created using the `go` keyword.
+	```go
+	func main(){
+		a:=1
+		go foo()
+		fmt.Println("World")
+	}
+	```
+- Exiting goroutines
+  - A gourutine exits when its code is complete.
+  - When the __main__ goroutine is complete, all ather goroutins exit.
+  - ![](img/delayedExit.png)
+
+> Adding a delay to wait for a goroutine is bad! Time asumptions may be completely wrong.
+
+### Synchronization
+Using __global events__ whose execution is viewed by all threads, symultaneously.
+![](img/sync.png)
+
+Sync WaitGroup
+- `sync.WaitGroup` is a synchronization primitive, that forces a goroutine to wait for other goroutines to complete.
+- Contiains an internal counter. the counter is decreased each time a goroutien completes.
+- ![](img/wg.png)
+
+Goroutine communication
+- Goroutines usually work together to perform a bigger task.
+Channels
+- Transfer data botwees goroutines.
+- Chanels are typed, and can only transfer data of that type.
+- `make()` is used to create a channel.
+  - ```go
+		ch:=make(chan int)
+    ```
+- Are used to recive and send data.
+  - ```go
+		ch<-1 //send data on channel
+		x:=<-ch //recive data from channel
+	 ```
+Example
+```go
+func prod(v1 int, v2 int, c chan int){
+	c<-v1*v2
+}
+func main(){
+	c:=make(chan, int)
+	go prod(1,2,c)
+	go prod(3,4,c)
+	a:=<-c
+	b:=<-c
+	fmt.Println(a*b)
+}
+```
+### Unbuffered channels
+- Unbuffered channels cannot hold data in transit.
+- ![](img/unbufferdeChannel.png)
+- This type of channel is also doing syncronization.
+
+### Buffered channels
+- Channels can contain a limited number of objects. By default is 0 (unbuffered).
+- Optional argument in `make()`
+- ![](img/bufferedChannel.png)
+- Buffer will not block, unless is full.
+- ![](img/useBuffer.png)
+
 
 ## Module 4 - Syncronized communication
 
- 
+ <!--  -->
