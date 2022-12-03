@@ -505,7 +505,7 @@ func prod(v1 int, v2 int, c chan int){
 	c<-v1*v2
 }
 func main(){
-	c:=make(chan, int)
+	c:=make(chan int)
 	go prod(1,2,c)
 	go prod(3,4,c)
 	a:=<-c
@@ -527,5 +527,111 @@ func main(){
 
 
 ## Module 4 - Syncronized communication
+### Iterating through a channel
+- It is commen to iteratively read from a channel; one iteration each time a new value is received.
+  ```go
+  for v:=range ch{
+	 fmt.Println(v)
+  }
+  ```
+- The cycle will continue until close is called on the channel. `close(ch)`
+- Data may also be received from multiple channels.
 
- <!--  -->
+### Select statement
+Choice on which data to use, when multiple channels are available.
+- First-come-first-served
+  - Waits on the first data from a set of channels.
+  - ```go
+		select{
+			case v:=<-ch1:
+				fmt.Println(v)
+			case v:=<-ch2:
+				fmt.Println(v)
+		}
+    ```
+  - Select may be used to select either send or receive operations.
+  - ```go
+    select{
+		case a = <- inchan:
+			fmt.Println("Roceived a")
+		case b <- inchan:
+			fmt.Println("Sent b")
+    }
+    ```
+  - Select with an abort channel
+  - ```go
+    for{
+		select{
+			case v:=<-ch1:
+				fmt.Println(v)
+			case <-abort: //abort is a different channel, and as soon a it gots some data, the for loop will stop.
+				return
+		}
+	 }
+	 ```
+  - If the `select` statement contains a default case, it will not block, if non of the other cases are ready.
+
+### Mutual exclusion
+Sharing variables concurrently may cause problems, If two or more goroutines are writing to a shared variable, they may interfere with each other.
+
+A function can be **"Concurrency-Safe"** when a function can be invoked without interfering with other goroutines.
+
+### Mutex
+DO NOT let 2 goroutines write a shared variable at the same time.
+Writing to shared variables should be mutually exclusive. That means that some code segmentes en different goroutiens should not execute concurrently
+![](img/syncMutex.png)
+- Methods
+  - `Lock()` sets the flag up
+    - The shared variable is in use.
+    - If the variable is locked by a goroutine, other goroutines cannot use that shared varible, until the lock goes down.
+  - `Unlock()` sets the flag down
+	 - The shared variable is not in use.
+	 - Other goroutines can use the shared variable.
+  - ```go
+    var i int = 0
+    var mut sync.Mutex
+    func inc(){
+		mut.Lock()
+		i++
+		mut.Unlock()
+    }
+    ```
+
+
+### Once syncronization
+Syncronous Inizialization
+- Must only happen once
+- Must happen before everything else
+- Package Sync.Once
+  - Has one method, `once.Do(f)`
+  - The function `f` is executed only one time, even if it is called on multiple goroutines.
+  - All calls to `once.Do(f)` will block until the first returns. That way initialization is is ensured.
+  - ```go
+    var wg sync.WaitGroup
+	 var on sync.Once
+	 func main(){
+		wg.Add(2)
+		go doStuff()
+		go doStuff()
+		wg.Wait()
+	 }
+    func doStuff(){
+		on.Do(setup)
+		fmt.Println("Doing stuff")
+		wg.Done()
+	 }
+	 func setup(){
+		fmt.Println("Init")
+	 }
+    ```
+  - ![](img/syncOnce.png)
+
+### DeadLock
+Cicular dependencies cause all involved goroutines to block.
+> G1 waits for G2, and G2 is also waiting for G1.
+> 
+Example:
+![](img/deadlock.png)
+Deteccion of deadlock
+![](img/deadlockDetection.png)
+
