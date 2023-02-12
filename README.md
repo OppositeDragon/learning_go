@@ -635,3 +635,61 @@ Example:
 Deteccion of deadlock
 ![](img/deadlockDetection.png)
 
+
+# GetGoIng
+
+## DataTypes
+- Atomic data types
+  - string
+  - int
+  - int32
+  - int64
+  - uint
+  - uint32
+  - uint64
+- unsafe
+  - Pointers
+- Abstract data types
+  - map[]<datatype>
+  - struct{}
+  - interface{}
+
+## Declare variables and constants
+```go
+//constants
+const name = "OppositeDragon"
+//one variable
+var num1 int
+num1 = 5
+var someNumber = "15" 
+//multiple variables
+var (num2, num3) int
+var (
+	num4 = 5,
+	num5 = 6
+	)
+//short declaration with assignment
+num6 := 5
+
+//Cancatenate
+fmt.Println("Hello",name)
+```
+### Casting
+```go
+var num1 int = 5
+var num2 float64 = 5.5
+
+float64(num1) + num2
+```
+### Printf
+[printf documentation](https://pkg.go.dev/fmt#hdr-Printing)
+```go
+fmt.Printf("Hello %v",name)
+```
+![](img/numericTypes.png)
+
+### Getting input from the user
+```go
+var name string
+fmt.Scanln(&name)
+```
